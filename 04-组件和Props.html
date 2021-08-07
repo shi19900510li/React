@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件&Props</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // 函数组件
+        function Welcom(props) {
+            return <h1>Hello, {props.name}</h1>;
+        }
+        // class组件
+        class WelcomClass extends React.Component {
+            render() {
+                return <h1>Hello, {this.props.name}</h1>;
+            }
+        }
+
+        const element = <Welcom name="shi wei dong" />;
+        // ReactDOM.render(
+        //     element,
+        //     document.getElementById('root')
+        // );
+
+        // 组件组合
+        function App() {
+            return (
+                <div>
+                    <Welcom name="Sara" />
+                    <Welcom name="Mary" />
+                    <Welcom name="James" />
+                </div>
+            );
+        }
+        ReactDOM.render(
+            <App />,
+            document.getElementById('root')
+        );
+
+        // 提取组件 React的组件不能修改props
+        // function Comment(props) {
+        //     <div className="Comment">
+        //          <div className="UserInfo">
+        //             <img 
+        //                 src={props.author.avartarUrl}
+        //                 alt={props.author.name}
+        //             />
+        //             <div className="UserInfo-name">
+        //                 {props.author.name}
+        //             </div>
+        //          </div>
+        //          <div className="Comment-text">
+        //             {props.text}
+        //          </div>
+        //          <div className="Comment-date">
+        //             {formatDate(props.date)}
+        //          </div>
+        //     </div>
+        // }
+
+        function Comment(props) {
+            <div className="Comment">
+                 <UserInfo user={props.author} />
+                 <div className="Comment-text">
+                    {props.text}
+                 </div>
+                 <div className="Comment-date">
+                    {formatDate(props.date)}
+                 </div>
+            </div>
+        }
+
+        function Avartar(props) {
+            return (
+                <img 
+                    src={props.user.avartarUrl}
+                    alt={props.user.name}
+                />
+            );
+        }
+
+        function UserInfo(props) {
+            return (
+                <div className="UserInfo">
+                    <Avartar user={props.user}/>
+                    <div className="UserInfo-name">
+                        {props.user.name}
+                    </div>
+                 </div>
+            );
+        }
+    </script>
+</body>
+</html>

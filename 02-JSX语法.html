@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSX语法</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // JSX嵌入表达式
+        // const name = 'Josh Perez';
+        // const element = <h1>Hello,{name}</h1>;
+        function formatUser(user) {
+            return user.firstName + ' ' + user.lastName;
+        }
+        const user = {
+            firstName: 'SHI',
+            lastName: 'weidong',
+            avartarUrl: 'pink.jpg'
+        };
+        const element = (<h1>Hello,{formatUser(user)}</h1>);
+
+        // JSX也是表达式
+        function getGreeting(user) {
+            if(user) {
+                return <h1>Hello,{formatUser(user)}</h1>;
+            } else {
+                return <h1>Hello,Strainger.</h1>
+            }
+        }
+
+        // JSX特定属性
+        const e2 = <div tabIndex='0'></div>;
+        const e3 = <img src={user.avartarUrl}></img>;
+
+        // 使用JSX指定子元素
+        const e4 = <img src={user.avartarUrl} /> // 标签无内容用/>来闭合标签
+        const e5 = (
+            <div>
+                <ul>
+                    <li>react</li>
+                    <li>vue</li>
+                    <li>angula</li>
+                </ul>
+            </div>
+        );
+
+        ReactDOM.render(
+            e5,
+            document.getElementById('root')
+        );
+    </script>
+</body>
+</html>
