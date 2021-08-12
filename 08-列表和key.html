@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表和key</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div id="blog"></div>
+    <script type="text/babel">
+        // 设置key 
+        function NumberList(props) {
+            const numbers = props.numbers;
+            const listItems = numbers.map((number) => <li key={number.toString()}>{number}</li>);
+            return <ul>{listItems}</ul>
+        }
+
+        const numbers = [1, 2, 3, 4, 5];
+        ReactDOM.render(
+            <NumberList numbers={numbers} />,
+            document.getElementById('root')
+        );
+        // key设置在map遍历时
+        function Blog(props) {
+            const sideBar = (
+                <ul>
+                    {
+                        props.posts.map((post) =>
+                            <li key={post.id}>{post.title}</li>
+                        )
+                    }
+                </ul>
+            );
+            const content = (
+                <ul>
+                    {
+                        props.posts.map((post) =>
+                            <div key={post.id}>
+                                <h3>{post.title}</h3>
+                                <li>{post.content}</li>
+                            </div>
+                        )
+                    }
+                </ul>
+            );
+            return (
+                <div>
+                    {sideBar}
+                    <hr />
+                    {content}
+                </div>
+            );
+        }
+        const posts = [
+            { id: 1, title: 'Hello World', content: 'Welcome to learning React!' },
+            { id: 2, title: 'Installation', content: 'You can install React from npm.' }
+        ];
+        ReactDOM.render(
+            <Blog posts={posts} />,
+            document.getElementById('blog')
+        )
+    </script>
+</body>
+
+</html>

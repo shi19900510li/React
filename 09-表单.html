@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div id="tt"></div>
+    <div id="sel"></div>
+    <div id="m_input"></div>
+    <script type="text/babel">
+        // 受控组件
+        class NameForm extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { value: '' };
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+            handleChange(event) {
+                this.setState({ value: event.target.value });
+            }
+            handleSubmit(event) {
+                alert('提交的名字：' + this.state.value);
+                event.preventDefalt();
+            }
+            render() {
+                return (
+                    <form action="" onSubmit={this.handleSubmit}>
+                        <label for="">
+                            名字：
+                            <input type="text" value={this.state.value} onChange={this.handleChange} />
+                        </label>
+                        <input type="submit" value="提交" />
+                    </form>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            (
+                <div>
+                    <h3>受控组件</h3>
+                    <NameForm />
+                </div>
+            ),
+            document.getElementById('root')
+        )
+
+        // textarea
+        class EasyTextArea extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { value: '这是初始化的内容' };
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+            handleChange(event) {
+                this.setState({ value: event.target.value });
+            }
+            handleSubmit(event) {
+                alert('提交的文章：' + this.state.value);
+                event.preventDefalt();
+            }
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            文章：
+                            <textarea value={this.state.value} onChange={this.handleChange}></textarea>
+                        </label>
+                        <input type="submit" value='提交' />
+                    </form>
+                );
+            }
+        }
+        ReactDOM.render(
+            (
+                <div>
+                    <h3>textarea</h3>
+                    <EasyTextArea />
+                </div>
+            ),
+            document.getElementById('tt')
+        )
+        // select
+        class FlavorForm extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { value: 'coconut' };
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+            handleChange(event) {
+                this.setState({ value: event.target.value });
+            }
+            handleSubmit(event) {
+                alert('您喜欢的风味是：' + this.state.value);
+            }
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            <select value={this.state.value} onChange={this.handleChange}>
+                                <option value="grapefruit">葡萄柚</option>
+                                <option value="lime">酸橙</option>
+                                <option value="coconut">椰子</option>
+                                <option value="mango">芒果</option>
+                            </select>
+                        </label>
+                        <input type="submit" value="提交" />
+                    </form>
+                );
+            }
+        }
+        ReactDOM.render(
+            (
+                <div>
+                    <h3>select</h3>
+                    <FlavorForm></FlavorForm>
+                </div>
+            ),
+            document.getElementById('sel')
+        );
+        // 处理多个输入
+        class Reservation extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    isGoing: true,
+                    numberOfGuests: 2
+                };
+                this.handleInputChange = this.handleInputChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+            handleInputChange(event) {
+                const target = event.target;
+                const value = target.type === 'checkbox' ? target.checked : target.value;
+                const name = target.name;
+
+                this.setState({
+                    [name]: value
+                })
+            }
+            handleSubmit(event) {
+                const content = this.state.isGoing ? '参与' + this.state.numberOfGuests : '未参与';
+                alert(content);
+                event.preventDefalt();
+            }
+            render() {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            参与：
+                            <input type="checkbox" name="isGoing" checked={this.state.isGoing} onChange={this.handleInputChange} />
+                        </label>
+                        <br />
+                        <label>
+                            来宾人数：
+                            <input type="number" name="numberOfGuests" value={this.state.numberOfGuests} onChange={this.handleInputChange} />
+                        </label>
+                        <input type="submit" value="提交" />
+                    </form>
+                );
+            }
+        }
+        ReactDOM.render(
+            (
+                <div>
+                    <h3>多input输入</h3>
+                    <Reservation></Reservation>
+                </div>
+            ),
+            document.getElementById('m_input')
+        );
+    </script>
+</body>
+
+</html>
